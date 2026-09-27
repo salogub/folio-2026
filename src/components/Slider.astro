@@ -20,7 +20,7 @@ const count = images.length || placeholders;
   <div class="track" data-track role="group" aria-label={`${label} images`}>
     {
       images.map((image, i) => (
-        <div class="slide">
+        <div class:list={['slide', i === 0 && 'is-active']}>
           <Image
             src={image.src}
             alt={image.alt}
@@ -32,8 +32,8 @@ const count = images.length || placeholders;
       ))
     }
     {
-      Array.from({ length: placeholders }, () => (
-        <div class="slide placeholder" aria-hidden="true" />
+      Array.from({ length: placeholders }, (_, i) => (
+        <div class:list={['slide placeholder', i === 0 && 'is-active']} aria-hidden="true" />
       ))
     }
   </div>
@@ -84,6 +84,19 @@ const count = images.length || placeholders;
     border-radius: var(--radius);
     background: var(--color-placeholder);
     scroll-snap-align: start;
+    /* Only the image lined up with the column is fully visible. */
+    opacity: 0.07;
+    transition: opacity 0.3s ease;
+  }
+
+  .slide.is-active {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide {
+      transition: none;
+    }
   }
 
   .slide img {
@@ -138,6 +151,7 @@ const count = images.length || placeholders;
 
     .slide {
       border-radius: 6px;
+      opacity: 1;
     }
 
     .slide:not(:first-child),
@@ -155,19 +169,28 @@ const count = images.length || placeholders;
     const prev = slider.querySelector<HTMLButtonElement>('[data-prev]');
     const next = slider.querySelector<HTMLButtonElement>('[data-next]');
     if (!prev || !next) continue;
+    const slides = [...track.children] as HTMLElement[];
 
-    // Hide ← on the first image and → on the last.
+    // Distance from one image to the next.
+    const step = () => {
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return slides[0].offsetWidth + gap;
+    };
+
     const update = () => {
+      // Hide ← on the first image and → on the last.
       const max = track.scrollWidth - track.clientWidth;
       prev.hidden = track.scrollLeft <= 1;
       next.hidden = track.scrollLeft >= max - 1;
+
+      // Highlight the image lined up with the column.
+      const active = Math.round(track.scrollLeft / step());
+      slides.forEach((slide, i) => slide.classList.toggle('is-active', i === active));
     };
 
     const go = (direction: number) => {
-      const slide = track.firstElementChild as HTMLElement;
-      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
       track.scrollBy({
-        left: direction * (slide.offsetWidth + gap),
+        left: direction * step(),
         behavior: reduceMotion.matches ? 'auto' : 'smooth',
       });
     };
