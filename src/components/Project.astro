@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Slider from './Slider.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  eager?: boolean;
+}
+
+const { project, eager } = Astro.props;
+const { title, year, summary, images } = project.data;
+---
+
+<article class="project">
+  <Slider images={images} label={title} eager={eager} />
+  <h3 class="title">{title}<span class="year">{year}</span></h3>
+  <p class="summary">{summary}</p>
+  <a class="link" href={`/work/${project.id}`}>
+    <span class="label">Case Study</span>
+    <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
+      <path d="M1 8 8 1M2 1h6v6" />
+    </svg>
+  </a>
+</article>
+
+<style>
+  .title {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .year {
+    margin-left: 20px;
+    color: var(--color-muted);
+  }
+
+  .summary {
+    max-width: 340px;
+    margin-top: 20px;
+  }
+
+  .link {
+    display: inline-block;
+    margin-top: 40px;
+    text-decoration: none;
+  }
+
+  .label {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .link svg {
+    margin-left: 10px;
+  }
+
+  .link path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+  }
+</style>

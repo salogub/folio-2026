@@ -29,6 +29,8 @@ Minimal portfolio site for a product designer. Built with Astro, deployed to Ver
 ## Case studies
 
 - One Markdown file per project in `src/content/projects/`.
+- `order` sets the position on the home page (1 = first).
+- Slider images go in a folder named like the file, e.g. `src/content/projects/afs-consulting/01.png`, listed under `images:` with alt text. Without images, grey placeholders show.
 - The filename becomes the URL: `src/content/projects/acme-redesign.md` → `/work/acme-redesign`.
 - Frontmatter (the block between `---` lines at the top) must match the schema in `src/content.config.ts`. The build fails with an error naming the file and field if it doesn't.
 - Changing the schema affects every case study. Tell the owner which files need updating before making the change.
@@ -40,10 +42,17 @@ Minimal portfolio site for a product designer. Built with Astro, deployed to Ver
 src/
   content.config.ts      case study schema (which fields each project has)
   content/projects/      one .md file per case study
+  site.ts                name, role, intro, Email and LinkedIn links
+  styles/global.css      shared colors, sizes and base text styles
+  components/            Project (one work on the home page), Slider
   layouts/Base.astro     the HTML frame shared by every page (<head>, etc.)
   pages/                 each file here is a page on the site
 public/                  files served as-is (favicon, etc.)
+design/                  Figma exports (PNG) to build from. Reference only: not
+                         part of the site, and kept out of Git (the repo is public)
 ```
+
+Name design exports by page and size, e.g. `home-desktop.png`, `case-study-mobile.png`.
 
 ## Commands
 
@@ -57,3 +66,4 @@ public/                  files served as-is (favicon, etc.)
 
 1. `npm run build` passes with no errors.
 2. Check the page in the browser, at desktop and phone widths.
+3. For layout work, compare against the PNGs in `design/` at the same size (1440px desktop, 402px mobile). Layout switches to mobile below 760px.

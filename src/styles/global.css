@@ -1,0 +1,61 @@
+/* Values measured from the Figma exports in design/. */
+:root {
+  --color-bg: #fff;
+  --color-text: #000;
+  --color-muted: #929292;
+  --color-placeholder: #d9d9d9;
+
+  --column: 720px;
+  --gutter: 20px;
+  --radius: 12px;
+
+  /* Space between the column and the window edge. */
+  --bleed: max(calc((100cqw - var(--column)) / 2), var(--gutter));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  /* Lets --bleed measure the page width without the scrollbar. */
+  container-type: inline-size;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  /* Figma's "Auto" line height for Inter. */
+  line-height: 1.21;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  width: min(var(--column), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
