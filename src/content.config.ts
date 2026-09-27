@@ -3,8 +3,9 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 // Case studies: one Markdown file per project in src/content/projects/.
-// Each project's images go in a folder with the same name next to it,
-// e.g. src/content/projects/afs-consulting/01.png
+// Each project's images go in a folder with the same name next to it:
+//   afs-consulting/home/         slider images on the home page (01.png, 02.png…)
+//   afs-consulting/case-study/   images used in the case study text
 const projects = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/projects' }),
   schema: ({ image }) =>

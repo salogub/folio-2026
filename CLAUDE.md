@@ -30,7 +30,11 @@ Minimal portfolio site for a product designer. Built with Astro, deployed to Ver
 
 - One Markdown file per project in `src/content/projects/`.
 - `order` sets the position on the home page (1 = first).
-- Slider images go in a folder named like the file, e.g. `src/content/projects/afs-consulting/01.png`, listed under `images:` with alt text. Without images, grey placeholders show.
+- Each project has an image folder named like its file, with two subfolders:
+  - `home/`: slider images for the home page (`01.png`, `02.png`…), listed under `images:` with alt text. Without images, grey placeholders show.
+  - `case-study/`: images placed in the case study text.
+  - The two sets are independent. Export slider images at 1440 × 952 px (the 720 × 476 frame at 2×); other shapes are cropped from the center.
+- The case study is the text below the frontmatter. The page shows the title, year and `summary` first, then this text. Images and paragraphs are spaced 40px apart. Add an image with `![Alt text](./afs-consulting/case-study/01.png)`; it spans the full column. Text formatting (headings, lists, etc.) isn't designed yet, so ask before styling it.
 - The filename becomes the URL: `src/content/projects/acme-redesign.md` → `/work/acme-redesign`.
 - Frontmatter (the block between `---` lines at the top) must match the schema in `src/content.config.ts`. The build fails with an error naming the file and field if it doesn't.
 - Changing the schema affects every case study. Tell the owner which files need updating before making the change.
