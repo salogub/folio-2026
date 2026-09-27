@@ -1,21 +1,117 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Project from '../components/Project.astro';
+import { site } from '../site';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.year - a.data.year);
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Base title="Portfolio">
-  <main>
-    <h1>Portfolio</h1>
-    <ul>
-      {projects.map((project) => (
-        <li>
-          <a href={`/work/${project.id}`}>{project.data.title}</a>
-          <p>{project.data.summary}</p>
-        </li>
-      ))}
-    </ul>
-  </main>
+<Base title={`${site.name} — ${site.role}`} description={site.intro}>
+  <div class="container page">
+    <header class="header" id="top">
+      <div class="intro-block">
+        <h1 class="name">{site.name}</h1>
+        <p class="role">{site.role}</p>
+      </div>
+      <p class="intro">{site.intro}</p>
+      <nav class="contacts" aria-label="Contacts">
+        <a href={site.email}>Email</a>
+        <a href={site.linkedin}>LinkedIn</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="works" aria-labelledby="works-heading">
+        <h2 class="works-heading" id="works-heading">Works</h2>
+        <div class="projects">
+          {projects.map((project, i) => <Project project={project} eager={i === 0} />)}
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a href="#top">Back to top</a>
+    </footer>
+  </div>
 </Base>
+
+<style>
+  .page {
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+
+  /* Desktop: name on the left, contacts on the right, intro below. */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'name contacts'
+      'intro intro';
+    align-items: start;
+  }
+
+  .intro-block {
+    grid-area: name;
+    font-size: 32px;
+    font-weight: 500;
+    /* Web Inter sets 32px slightly looser than Figma's; this matches the mockup. */
+    letter-spacing: -0.015em;
+  }
+
+  .role {
+    color: var(--color-muted);
+  }
+
+  .intro {
+    grid-area: intro;
+    max-width: 340px;
+    margin-top: 40px;
+  }
+
+  .contacts {
+    grid-area: contacts;
+    display: flex;
+    gap: 40px;
+  }
+
+  .works {
+    margin-top: 80px;
+  }
+
+  .works-heading {
+    font-size: 20px;
+    color: var(--color-muted);
+    margin-bottom: 20px;
+  }
+
+  .projects {
+    display: grid;
+    gap: 80px;
+  }
+
+  .footer {
+    margin-top: 80px;
+  }
+
+  /* Mobile: contacts move under the intro. */
+  @media (max-width: 759px) {
+    .header {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'name'
+        'intro'
+        'contacts';
+    }
+
+    .contacts {
+      margin-top: 40px;
+    }
+
+    .projects {
+      gap: 40px;
+    }
+  }
+</style>
