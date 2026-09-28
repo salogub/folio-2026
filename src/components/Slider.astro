@@ -25,7 +25,7 @@ const count = images.length || placeholders;
             src={image.src}
             alt={image.alt}
             widths={[400, 720, 1080, 1440]}
-            sizes="(max-width: 759px) calc(100vw - 40px), 720px"
+            sizes="(max-width: 759px) calc(100vw - 70px), 720px"
             loading={eager && i === 0 ? 'eager' : 'lazy'}
           />
         </div>
@@ -143,20 +143,18 @@ const count = images.length || placeholders;
     stroke-linejoin: round;
   }
 
-  /* Mobile: just the first image, no slider. */
+  /* Mobile: swipe instead of arrows. */
   @media (max-width: 759px) {
+    /* 30px more space at the end makes each image 30px narrower than the
+       column, so the next one peeks in, and lets the last image line up. */
     .track {
-      margin-inline: 0;
-      padding-inline: 0;
-      overflow: hidden;
+      padding-inline-end: calc(var(--bleed) + 30px);
     }
 
     .slide {
       border-radius: 6px;
-      opacity: 1;
     }
 
-    .slide:not(:first-child),
     .arrow {
       display: none;
     }
