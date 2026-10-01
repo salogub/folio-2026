@@ -2,7 +2,7 @@
 title: Empire State Dance Center
 year: 2022
 order: 5
-summary: I design web and mobile apps end-to-end, from discovery to launch
+summary: "Redesign concept for a New York dance school website. I kept the existing content, replaced the visual style with one built around street energy and movement, and redesigned the class schedule, leaving room for booking later. Not affiliated with the school."
 images:
   - src: "./empire-state-dance-center/home/Empire State Dance Center 01.png"
     alt: "Empire State Dance Center website: home page hero and featured classes"

@@ -2,7 +2,7 @@
 title: Rent Apartment App
 year: 2023
 order: 3
-summary: I design web and mobile apps end-to-end, from discovery to launch
+summary: "Concept for an Airbnb-style app that connects property owners with renters, including branding. Key decisions: browsing listings without signing up, a three-step search for more precise filtering, a simplified registration flow, and saved listings with messaging. Covers the core flows rather than every edge case."
 images:
   - src: "./rent-apartment-app/home/Rent Apartment 01.png"
     alt: "Rent Apartment app: listing search results and apartment details screen"
