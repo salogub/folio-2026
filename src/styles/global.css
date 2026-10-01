@@ -9,6 +9,9 @@
   --gutter: 20px;
   --radius: 12px;
 
+  /* Project descriptions (home page and case study pages). */
+  --line-height-summary: 1.5;
+
   /* Space between the column and the window edge. */
   --bleed: max(calc((100cqw - var(--column)) / 2), var(--gutter));
 }
