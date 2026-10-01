@@ -2,7 +2,7 @@
 title: Home Decor Store
 year: 2023
 order: 4
-summary: I design web and mobile apps end-to-end, from discovery to launch
+summary: "Concept for a home decor online store with a catalog, filters, and a short, minimal checkout. A soft palette supports a cozy feel, and a responsive mobile version is included."
 images:
   - src: "./home-decor-store/home/Home Decor Store 01.png"
     alt: "Home Decor online store: home page hero and featured categories"

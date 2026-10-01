@@ -1,8 +1,8 @@
 ---
-title: afs.consulting
+title: AFS Consulting
 year: 2026
 order: 1
-summary: I design web and mobile apps end-to-end, from discovery to launch
+summary: "Corporate website for a financial consulting firm, designed to a strict brief with tight rules for both visuals and content: minimal, calm, no people or stock photography. I developed five concepts for the first three screens, one was selected, and I extended it into the full site through several rounds of content revisions. Currently in development."
 images:
   - src: "./afs-consulting/home/afs.consulting 01.png"
     alt: "Anti Fragile System website: home page hero and services overview"
