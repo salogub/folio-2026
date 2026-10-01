@@ -3,6 +3,9 @@ title: Voice of Crimea
 year: 2024
 order: 2
 summary: "Redesign of an independent news site and its editorial CMS, as the sole designer. I kept the brand recognizable while visually separating news from articles, analysis, interviews, and blogs. I also designed a lightweight custom CMS, built with mobile editing in mind, instead of adapting an off-the-shelf one. The site supports three languages, light and dark themes, and typography tuned for reading and quoting. I supported development for nine months through launch."
+externalCase:
+  label: "Full Case on Behance"
+  url: "https://www.behance.net/gallery/243955823/Voice-of-Crimea-Editorial-Platform-Redesign"
 liveWebsite: "https://www.voicecrimea.com.ua/uk/"
 images:
   - src: "./voice-of-crimea/home/Voice of Crimea 01.png"
