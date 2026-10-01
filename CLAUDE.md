@@ -35,6 +35,7 @@ Minimal portfolio site for a product designer. Built with Astro, deployed to Ver
   - `case-study/`: images placed in the case study text.
   - The two sets are independent. Export slider images at 1440 × 952 px (the 720 × 476 frame at 2×); other shapes are cropped from the center.
 - The case study is the text below the frontmatter. The page shows the title, year and `summary` first, then this text. Images and paragraphs are spaced 40px apart. Add an image with `![Alt text](./afs-consulting/case-study/01.png)`; it spans the full column. Text formatting (headings, lists, etc.) isn't designed yet, so ask before styling it.
+- Optional links: `externalCase` (`label` + `url`) points the home page button to an outside case study, such as Behance, and no `/work` page is built for that project. `liveWebsite` adds a "Live Website" button 20px to the right. Outside links open in a new tab.
 - The filename becomes the URL: `src/content/projects/acme-redesign.md` → `/work/acme-redesign`.
 - Frontmatter (the block between `---` lines at the top) must match the schema in `src/content.config.ts`. The build fails with an error naming the file and field if it doesn't.
 - Changing the schema affects every case study. Tell the owner which files need updating before making the change.
