@@ -8,7 +8,17 @@ interface Props {
 }
 
 const { project, eager } = Astro.props;
-const { title, year, summary, images } = project.data;
+const { title, year, summary, images, externalCase, liveWebsite } = project.data;
+
+// Buttons under the description. Outside links open in a new tab.
+const links = [
+  externalCase
+    ? { label: externalCase.label, href: externalCase.url, external: true }
+    : { label: 'Case Study', href: `/work/${project.id}`, external: false },
+  ...(liveWebsite
+    ? [{ label: 'Live Website', href: liveWebsite, external: true }]
+    : []),
+];
 ---
 
 <article class="project">
@@ -18,12 +28,22 @@ const { title, year, summary, images } = project.data;
     <p class="year">{year}</p>
   </div>
   <p class="summary">{summary}</p>
-  <a class="link" href={`/work/${project.id}`}>
-    <span class="label">Case Study</span>
-    <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
-      <path d="M1 8 8 1M2 1h6v6" />
-    </svg>
-  </a>
+  <div class="links">
+    {
+      links.map(({ label, href, external }) => (
+        <a
+          class="link"
+          href={href}
+          {...(external && { target: '_blank', rel: 'noopener' })}
+        >
+          <span class="label">{label}</span>
+          <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
+            <path d="M1 8 8 1M2 1h6v6" />
+          </svg>
+        </a>
+      ))
+    }
+  </div>
 </article>
 
 <style>
@@ -47,9 +67,14 @@ const { title, year, summary, images } = project.data;
     margin-top: 20px;
   }
 
-  .link {
-    display: inline-block;
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     margin-top: 40px;
+  }
+
+  .link {
     text-decoration: none;
   }
 

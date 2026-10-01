@@ -3,6 +3,9 @@ title: Home Decor Store
 year: 2023
 order: 4
 summary: "Concept for a home decor online store with a catalog, filters, and a short, minimal checkout. A soft palette supports a cozy feel, and a responsive mobile version is included."
+externalCase:
+  label: "Full Case on Behance"
+  url: "https://www.behance.net/gallery/166713947/Home-Decor"
 images:
   - src: "./home-decor-store/home/Home Decor Store 01.png"
     alt: "Home Decor online store: home page hero and featured categories"

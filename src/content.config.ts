@@ -19,6 +19,13 @@ const projects = defineCollection({
       images: z
         .array(z.object({ src: image(), alt: z.string() }))
         .default([]),
+      // Send the home page button to an outside case study (e.g. Behance)
+      // instead of a page on this site. No /work page is built for it.
+      externalCase: z
+        .object({ label: z.string(), url: z.string().url() })
+        .optional(),
+      // Adds a "Live Website" button next to the case study button.
+      liveWebsite: z.string().url().optional(),
       // Hide a case study from the site without deleting it.
       draft: z.boolean().default(false),
     }),
