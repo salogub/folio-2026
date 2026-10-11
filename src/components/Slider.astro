@@ -7,16 +7,18 @@ interface Props {
   label: string;
   // Load the first image right away (for the top of the page).
   eager?: boolean;
+  // Which part of an image stays visible when it is cropped to fit.
+  position?: 'center' | 'top';
 }
 
-const { images, label, eager = false } = Astro.props;
+const { images, label, eager = false, position = 'center' } = Astro.props;
 
 // Until real images are added, show grey boxes like the Figma layout.
 const placeholders = images.length === 0 ? 3 : 0;
 const count = images.length || placeholders;
 ---
 
-<div class="slider" data-slider>
+<div class="slider" data-slider style={`--image-position: ${position}`}>
   <div class="track" data-track role="group" aria-label={`${label} images`}>
     {
       images.map((image, i) => (
@@ -103,6 +105,7 @@ const count = images.length || placeholders;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: var(--image-position, center);
   }
 
   .arrow {

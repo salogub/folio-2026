@@ -1,11 +1,28 @@
 ---
+import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Project from '../components/Project.astro';
-import { site } from '../site';
+import Slider from '../components/Slider.astro';
+import ArrowLink from '../components/ArrowLink.astro';
+import { site, otherImages } from '../site';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft))
   .sort((a, b) => a.data.order - b.data.order);
+
+// Slider images for "Other": every file in src/images/other/, in name order.
+const otherFiles = import.meta.glob<{ default: ImageMetadata }>(
+  '../images/other/*.{png,jpg,jpeg,webp}',
+  { eager: true },
+);
+const other = Object.entries(otherFiles)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([path, mod]) => ({
+    src: mod.default,
+    alt:
+      otherImages.find((image) => path.endsWith(`/${image.file}`))?.alt ??
+      'Other design work',
+  }));
 ---
 
 <Base title={`${site.name} — ${site.role}`} description={site.intro}>
@@ -27,6 +44,14 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft))
         <h2 class="works-heading" id="works-heading">Works</h2>
         <div class="projects">
           {projects.map((project, i) => <Project project={project} eager={i === 0} />)}
+        </div>
+      </section>
+
+      <section class="other" aria-labelledby="other-heading">
+        <h2 class="works-heading" id="other-heading">Other</h2>
+        <Slider images={other} label="Other" position="top" />
+        <div class="other-links">
+          <ArrowLink label="More work on Dribbble" href={site.dribbble} external />
         </div>
       </section>
     </main>
@@ -90,6 +115,14 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft))
   .projects {
     display: grid;
     gap: 80px;
+  }
+
+  .other {
+    margin-top: 80px;
+  }
+
+  .other-links {
+    margin-top: 40px;
   }
 
   .footer {

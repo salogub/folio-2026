@@ -1,0 +1,39 @@
+---
+interface Props {
+  label: string;
+  href: string;
+  // Outside links open in a new tab.
+  external?: boolean;
+}
+
+const { label, href, external = false } = Astro.props;
+---
+
+<a class="link" href={href} {...(external && { target: '_blank', rel: 'noopener' })}>
+  <span class="label">{label}</span>
+  <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
+    <path d="M1 8 8 1M2 1h6v6" />
+  </svg>
+</a>
+
+<style>
+  .link {
+    text-decoration: none;
+  }
+
+  .label {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .link svg {
+    margin-left: 10px;
+  }
+
+  .link path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+  }
+</style>
