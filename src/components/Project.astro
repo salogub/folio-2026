@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Slider from './Slider.astro';
+import ArrowLink from './ArrowLink.astro';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -29,20 +30,7 @@ const links = [
   </div>
   <p class="summary">{summary}</p>
   <div class="links">
-    {
-      links.map(({ label, href, external }) => (
-        <a
-          class="link"
-          href={href}
-          {...(external && { target: '_blank', rel: 'noopener' })}
-        >
-          <span class="label">{label}</span>
-          <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
-            <path d="M1 8 8 1M2 1h6v6" />
-          </svg>
-        </a>
-      ))
-    }
+    {links.map((link) => <ArrowLink {...link} />)}
   </div>
 </article>
 
@@ -74,25 +62,5 @@ const links = [
     flex-wrap: wrap;
     gap: 20px;
     margin-top: 40px;
-  }
-
-  .link {
-    text-decoration: none;
-  }
-
-  .label {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .link svg {
-    margin-left: 10px;
-  }
-
-  .link path {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.25;
   }
 </style>
