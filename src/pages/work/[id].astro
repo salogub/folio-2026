@@ -121,14 +121,13 @@ const { Content } = await render(project);
     margin-top: 40px;
   }
 
-  /* Text blocks keep the narrow measure from the Figma template;
-     paragraphs holding an image span the full column. */
-  .content :global(p:not(:has(> img))) {
-    max-width: 340px;
-  }
-
+  /* Images are wider than the text column: up to 1400px, centered, and never
+     closer than the gutter to the window edge. */
   .content :global(img) {
-    width: 100%;
+    --wide: min(var(--column-wide), 100cqw - 2 * var(--gutter));
+    width: var(--wide);
+    max-width: none;
+    margin-left: calc((100% - var(--wide)) / 2);
     height: auto;
     border-radius: var(--radius);
   }
