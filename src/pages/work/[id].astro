@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { title, year, summary } = project.data;
+const { title, year, summary, details } = project.data;
 const { Content } = await render(project);
 ---
 
@@ -40,7 +40,20 @@ const { Content } = await render(project);
         <h1>{title}</h1>
         <p class="year">{year}</p>
       </div>
-      <p class="summary">{summary}</p>
+      {
+        details ? (
+          <dl class="details">
+            {details.map(({ label, value }) => (
+              <>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </>
+            ))}
+          </dl>
+        ) : (
+          <p class="summary">{summary}</p>
+        )
+      }
       <div class="content">
         <Content />
       </div>
@@ -112,6 +125,22 @@ const { Content } = await render(project);
     margin-top: 40px;
   }
 
+  /* Role, scope, year and status: label column, then value. */
+  .details {
+    display: grid;
+    grid-template-columns: 89px 1fr;
+    row-gap: 5px;
+    margin: 80px 0 0;
+  }
+
+  .details dt {
+    color: var(--color-muted);
+  }
+
+  .details dd {
+    margin: 0;
+  }
+
   /* The case study body, written in Markdown: every block 40px apart. */
   .content {
     margin-top: 40px;
@@ -119,6 +148,30 @@ const { Content } = await render(project);
 
   .content > :global(* + *) {
     margin-top: 40px;
+  }
+
+  /* Section headings (## in Markdown) and the gray text under them. */
+  .details + .content {
+    margin-top: 87px;
+  }
+
+  .content :global(h2) {
+    margin-top: 64px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .content > :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .content > :global(h2 + *) {
+    margin-top: 28px;
+  }
+
+  .content :global(p) {
+    color: var(--color-description);
+    line-height: var(--line-height-summary);
   }
 
   /* Images are wider than the text column: up to 1400px, centered, and never
