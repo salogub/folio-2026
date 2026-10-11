@@ -15,6 +15,11 @@ const projects = defineCollection({
       // Position on the home page: 1 is first.
       order: z.number(),
       summary: z.string(),
+      // Optional rows (Role, Scope, Year, Status…) shown on the case study
+      // page instead of the summary.
+      details: z
+        .array(z.object({ label: z.string(), value: z.string() }))
+        .optional(),
       // Slider images on the home page, in order.
       images: z
         .array(z.object({ src: image(), alt: z.string() }))
