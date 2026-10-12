@@ -19,6 +19,16 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { title, year, summary, details, liveWebsite } = project.data;
 const { Content } = await render(project);
+
+// If a detail value mentions the live site's domain (e.g. "Live · voicecrimea.com.ua"),
+// that part becomes a link to the live site.
+const domain = liveWebsite ? new URL(liveWebsite).hostname.replace(/^www\./, '') : null;
+const splitValue = (value: string) => {
+  const i = domain ? value.indexOf(domain) : -1;
+  return i < 0
+    ? null
+    : [value.slice(0, i), domain, value.slice(i + domain!.length)];
+};
 ---
 
 <Base title={`${title} — ${site.name}`} description={summary}>
@@ -44,12 +54,27 @@ const { Content } = await render(project);
       {
         details ? (
           <dl class="details">
-            {details.map(({ label, value }) => (
-              <>
-                <dt>{label}</dt>
-                <dd>{value}</dd>
-              </>
-            ))}
+            {details.map(({ label, value }) => {
+              const parts = splitValue(value);
+              return (
+                <>
+                  <dt>{label}</dt>
+                  <dd>
+                    {parts ? (
+                      <>
+                        {parts[0]}
+                        <a href={liveWebsite} target="_blank" rel="noopener">
+                          {parts[1]}
+                        </a>
+                        {parts[2]}
+                      </>
+                    ) : (
+                      value
+                    )}
+                  </dd>
+                </>
+              );
+            })}
           </dl>
         ) : (
           <p class="summary">{summary}</p>
